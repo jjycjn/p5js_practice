@@ -2,7 +2,7 @@ var angle, size, slider1, slider2;
 var rootcolor, leafcolor, currentcolor, weight;
 
 function setup() {
-  createCanvas(640, 500);
+  createCanvas(640, 550);
   slider1 = createSlider(0, PI, PI/6, 0.01);
   slider1.position(20, 20);
   slider2 = createSlider(0, 0.75, 0.75, 0.01);
