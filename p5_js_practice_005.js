@@ -127,6 +127,8 @@ function Reset() {
   score = 0;
 }
 
-function mousePressed() {
-  bird.up();
+function keyPressed() {
+  if (key == " ") {
+    bird.up();
+  }
 }
