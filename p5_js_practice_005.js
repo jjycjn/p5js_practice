@@ -122,7 +122,7 @@ function Reset() {
   bird = new Bird();
   pipes = [];
   pipes.push(new Pipe());
-  img = loadImage("Miji.png")
+  img = loadImage("https://cdn.rawgit.com/jjycjn/p5js_practice/b8a1bb4e/Miji.png")
   stop = 1;
   score = 0;
 }
