@@ -76,10 +76,10 @@ function Bird() {
 
 function Pipe() {
   this.top = random(height/2);
-  this.bottom = this.top + random(160, 240);
+  this.bottom = this.top + random(80, 160);
   this.x = width;
   this.w = random(30, 60);
-  this.speed = random(3, 4);
+  this.speed = random(3, 5);
   this.collision = false;
 
   this.show = function() {
