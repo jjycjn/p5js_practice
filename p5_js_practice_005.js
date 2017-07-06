@@ -1,134 +1,66 @@
-var bird;
-var pipes;
-var score;
-var button;
-var stop;
-var img;
+var R; // the radius of the outer circle
+var k; // how big the inner circle is with respect to the outer circle
+var l; // how far the point is located from the center of the inner circle
+var t; // time variable
+var xold, yold, xnew, ynew; // defined for a line segment
+var hue, i; // defined for a color of a line segment
+var button, kslider, lslider;
 
 function setup() {
-  Reset();
-  button = createButton("Restart!")
-    button.mousePressed(Reset);
-  button.position(20, 350);
+  createCanvas(640, 640);
+
+  button = createButton("Refresh");
+  button.position(20, 600);
+  button.mousePressed(Refresh);
+  kslider = createSlider(0, 1, 0.24, 0.01);
+  kslider.position(20, 20);
+  lslider = createSlider(0, 1, 0.95, 0.01);
+  lslider.position(20, 40);
+
+  // initial setup
+  R = 280;
+  t = 0;
+  k = kslider.value();
+  l = lslider.value();
+  hue = 0;
+  i = 0.5;
+  xold = R * ((1-k) * cos(t) + l * k * cos((1-k) * t / k));
+  yold = R * ((1-k) * sin(t) + l * k * sin((1-k) * t / k));
+
+  translate(360, 320);
+  stroke(220);
+  ellipse(0, 0, 2*R, 2*R);
 }
 
 function draw() {
-  background(220);
+  k = kslider.value();
+  l = lslider.value();
+  t += k / 5;
+  xnew = R * ((1-k) * cos(t) + l * k * cos((1-k) * t / k));
+  ynew = R * ((1-k) * sin(t) + l * k * sin((1-k) * t / k));
 
+  // draw a line segment
+  translate(360, 320);
+  colorMode(HSB);
+  stroke(hue, 100, 100);
+  line(xold, yold, xnew, ynew);
 
-  if (!pipes[0].collison) {
-    if (frameCount % 80 == 0) {
-      pipes.push(new Pipe());
-    }
-  }
-
-  for (var i = pipes.length-1; i >= 0; i--) {
-    pipes[i].show();
-    pipes[i].update();
-    pipes[i].hits(bird);
-
-    if (pipes[i].offscreen()) {
-      pipes.splice(i, 1);
-    }
-  }
-
-  bird.show();
-  bird.update();
-  bird.check();
-
-  textSize(15);
-  fill(0);
-  text(score, 600, 20);
-}
-
-function Bird() {
-  this.x = 100;
-  this.y = height/2;
-  this.gravity = 0.2;
-  this.velocity = 0;
-
-  this.show = function() {
-    fill(0);
-    image(img, this.x, this.y, img.width/3, img.height/3);
-  }
-
-  this.update = function() {
-    this.velocity += this.gravity;
-    this.y += this.velocity * stop;
-  }
-
-  this.up = function() {
-    this.velocity += -5;
-  }
-
-  this.check = function() {
-    if (bird.y < 0 || bird.y > height) {
-      textSize(50);
-      fill(0);
-      text("Game over!!!", 180, 170);
-      textSize(15);
-      text("your score is " + score, 260, 200);
-      stop = 0;
-      button.position(20, 350);
-    }
+  // update
+  xold = xnew;
+  yold = ynew;
+  hue += 0.1;
+  if (hue > 360) {
+    hue = 0;
   }
 }
 
-function Pipe() {
-  this.top = random(height/2);
-  this.bottom = this.top + random(80, 160);
-  this.x = width;
-  this.w = random(30, 60);
-  this.speed = random(3, 5);
-  this.collision = false;
+function Refresh() {
+  k = kslider.value();
+  l = lslider.value();
+  t = 0;
+  xold = R * ((1-k) * cos(t) + l * k * cos((1-k) * t / k));
+  yold = R * ((1-k) * sin(t) + l * k * sin((1-k) * t / k));
 
-  this.show = function() {
-    if (this.collision) {
-      fill(255, 0, 0);
-    } else {
-      fill(255);
-    }
-    rect(this.x, 0, this.w, this.top);
-    rect(this.x, this.bottom, this.w, height);
-  }
-
-  this.update = function() {
-    this.x -= this.speed * stop;
-  }
-
-  this.offscreen = function() {
-    return (this.x < -this.w);
-  }
-
-  this.hits = function(bird) {
-    if (this.x < 100 + img.width/3 && this.x + this.w > 100) {
-      if (bird.y < this.top || bird.y + img.height/3 > this.bottom) {
-        textSize(50);
-        fill(0);
-        text("Game over!!!", 180, 170);
-        textSize(15);
-        text("your score is " + score, 260, 200);
-        this.collision = true;
-        stop = 0;
-      } else {
-        score += 10;
-      }
-    }
-  }
-}
-
-function Reset() {
-  createCanvas(640, 320);
-  bird = new Bird();
-  pipes = [];
-  pipes.push(new Pipe());
-  img = loadImage("https://cdn.rawgit.com/jjycjn/p5js_practice/b8a1bb4e/Miji.png")
-  stop = 1;
-  score = 0;
-}
-
-function keyPressed() {
-  if (key == " ") {
-    bird.up();
-  }
+  stroke(220);
+  ellipse(0, 0, 2*R, 2*R);
 }
