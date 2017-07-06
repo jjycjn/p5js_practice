@@ -13,9 +13,13 @@ function setup() {
   button.position(20, 600);
   button.mousePressed(Refresh);
   kslider = createSlider(0, 1, 0.24, 0.01);
-  kslider.position(20, 20);
+  kslider.position(35, 20);
+  
   lslider = createSlider(0, 1, 0.95, 0.01);
-  lslider.position(20, 40);
+  lslider.position(35, 45);
+  textSize(15);
+  text("k", 20, 35);
+  text("l", 20, 60);
 
   // initial setup
   R = 280;
