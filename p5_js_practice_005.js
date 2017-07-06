@@ -8,6 +8,7 @@ var button, kslider, lslider;
 
 function setup() {
   createCanvas(640, 640);
+  background(255);
 
   button = createButton("Refresh");
   button.position(20, 600);
