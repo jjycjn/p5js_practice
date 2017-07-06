@@ -8,7 +8,6 @@ var button, kslider, lslider;
 
 function setup() {
   createCanvas(640, 640);
-  background(255);
 
   button = createButton("Refresh");
   button.position(20, 600);
@@ -32,7 +31,7 @@ function setup() {
   xold = R * ((1-k) * cos(t) + l * k * cos((1-k) * t / k));
   yold = R * ((1-k) * sin(t) + l * k * sin((1-k) * t / k));
 
-  translate(360, 320);
+  translate(360, 300);
   stroke(220);
   ellipse(0, 0, 2*R, 2*R);
 }
@@ -45,7 +44,7 @@ function draw() {
   ynew = R * ((1-k) * sin(t) + l * k * sin((1-k) * t / k));
 
   // draw a line segment
-  translate(360, 320);
+  translate(360, 300);
   colorMode(HSB);
   stroke(hue, 100, 100);
   line(xold, yold, xnew, ynew);
@@ -66,6 +65,7 @@ function Refresh() {
   xold = R * ((1-k) * cos(t) + l * k * cos((1-k) * t / k));
   yold = R * ((1-k) * sin(t) + l * k * sin((1-k) * t / k));
 
+  colorMode(RGB);
   stroke(220);
   ellipse(0, 0, 2*R, 2*R);
 }
