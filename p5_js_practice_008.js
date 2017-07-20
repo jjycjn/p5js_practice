@@ -34,10 +34,6 @@ function draw() {
   Rose.push(createVector(x,y));
   t += 0.1 / max(abs(k), 1);
   
-  if (t > 2 * PI) {
-    Refresh();
-  }
-  
   noStroke();
   fill(0);
   textSize(15);
